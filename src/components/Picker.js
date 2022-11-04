@@ -612,6 +612,16 @@ function Picker({
      * The label of the selected item / placeholder.
      */
     const _selectedItemLabel = useMemo(() => getLabel(_placeholder), [getLabel, _placeholder]);
+    const testLabel = useMemo(()=>{
+        const item = getSelectedItem();
+    console.log('necessaryItems', item);
+        try{
+            return item['subLabel'];
+        }catch(e){
+            return undefined
+        }
+    },[getSelectedItem])
+    // const _selectedItemSubLabel = necessaryItems.find(item => item['subLabel'])||'';
 
     /**
      * The icon of the selected item.
@@ -742,7 +752,7 @@ function Picker({
         },
         ...[style].flat(),
         ...[_disabledStyle].flat(),
-        pickerNoBorderRadius
+        // pickerNoBorderRadius
     ]), [rtl, style, _disabledStyle, pickerNoBorderRadius, _zIndex, THEME]);
 
     /**
@@ -758,7 +768,6 @@ function Picker({
      * @returns {object}
      */
     const _labelStyle = useMemo(() => ([
-        THEME.label,
         ...[textStyle].flat(),
         ...[! isNull && labelStyle].flat(),
         ...[_placeholderStyle].flat(),
@@ -784,7 +793,7 @@ function Picker({
             zIndex: _zIndex
         },
         ...[dropDownContainerStyle].flat(),
-        dropDownNoBorderRadius
+        // dropDownNoBorderRadius
     ]), [
         dropDownContainerStyle,
         pickerHeight,
@@ -892,12 +901,18 @@ function Picker({
      * The simple body component.
      * @returns {JSX.Element}
      */
+    console.log('_labelStyle', _labelStyle);
     const SimpleBodyComponent = useMemo(() => (
         <>
             {SelectedItemIconComponent}
-            <Text style={_labelStyle} {...labelProps}>
+            <View style={{flex:1, justifyContent:'center'  }}>
+            <Text style={[_labelStyle,{ }]} {...labelProps}>
                 {_selectedItemLabel}
             </Text>
+            {testLabel && <Text style={_labelStyle} {...labelProps}>
+                {testLabel}
+            </Text>}
+            </View>
         </>
     ), [SelectedItemIconComponent, _labelStyle, labelProps, _selectedItemLabel]);
 
@@ -1795,7 +1810,7 @@ function Picker({
      * @returns {string}
      */
     const pointerEvents = useMemo(() => disabled ? "none" : "auto", [disabled]);
-
+    console.log('_style', _style);
     return (
         <View style={_containerStyle} {...containerProps}>
             <TouchableOpacity style={_style} onPress={__onPress} onLayout={__onLayout} {...props} ref={onRef} pointerEvents={pointerEvents} disabled={disabled} testID={testID}>
