@@ -614,7 +614,6 @@ function Picker({
     const _selectedItemLabel = useMemo(() => getLabel(_placeholder), [getLabel, _placeholder]);
     const testLabel = useMemo(()=>{
         const item = getSelectedItem();
-    console.log('necessaryItems', item);
         try{
             return item['subLabel'];
         }catch(e){
@@ -901,7 +900,6 @@ function Picker({
      * The simple body component.
      * @returns {JSX.Element}
      */
-    console.log('_labelStyle', _labelStyle);
     const SimpleBodyComponent = useMemo(() => (
         <>
             {SelectedItemIconComponent}
@@ -1810,7 +1808,6 @@ function Picker({
      * @returns {string}
      */
     const pointerEvents = useMemo(() => disabled ? "none" : "auto", [disabled]);
-    console.log('_style', _style);
     return (
         <View style={_containerStyle} {...containerProps}>
             <TouchableOpacity style={_style} onPress={__onPress} onLayout={__onLayout} {...props} ref={onRef} pointerEvents={pointerEvents} disabled={disabled} testID={testID}>
